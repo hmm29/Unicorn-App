@@ -29,4 +29,4 @@ const styles = {
     alignItems: 'center',
     marginTop: height/20
   }
-}
+};

@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity, Text} from 'react-native';
 import PropTypes from 'prop-types';
 
-const {height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default class UIButton extends Component {
   static propTypes = {
@@ -29,10 +29,9 @@ export default class UIButton extends Component {
 
 const styles = {
   button: {
+    backgroundColor: '#B84ED7',
     borderWidth: 1,
-    borderColor: '#aaa',
     borderRadius: 5,
-    width: height/10,
     height: height/10,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -40,6 +39,9 @@ const styles = {
   },
   buttonText: {
     fontSize: height/45,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
   }
 }

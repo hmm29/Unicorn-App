@@ -27,9 +27,9 @@ const styles = {
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    backgroundColor: '#ddd',
-    paddingTop: 20
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+    padding: 20
   },
   icon: {
     width: width/20,

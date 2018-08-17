@@ -92,7 +92,7 @@ export default class Register extends Component {
         />
         <UIButton disabled={disabled} title="Register" style={styles.button} onPress={this._onPress.bind(this)}/>
         <View style={styles.bottomOptions}>
-            <Text onPress={() => navigate('Login')}>Already a Unicorn user ? Log In</Text>
+            <Text onPress={() => navigate('Login')}>Already a 🦄 user ? Log In</Text>
         </View>
       </ScreenBase>
     )
@@ -101,8 +101,6 @@ export default class Register extends Component {
 
 const styles = {
   button: {
-    width: width-20,
-    height: height/8,
     borderWidth: 1,
     borderColor: '#aaa',
     borderRadius: 5,
@@ -114,5 +112,6 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: 20
    }
 }

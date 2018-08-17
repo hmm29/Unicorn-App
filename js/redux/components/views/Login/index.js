@@ -87,13 +87,9 @@ const styles = {
     textAlign: 'center'
   },
   button: {
-    width: width-20,
-    height: height/8,
     borderWidth: 1,
     borderColor: '#aaa',
     borderRadius: 5,
     margin: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
   }
 };

@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { Dimensions, Platform, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import AudioPlayer from 'react-native-play-audio';
 import ScreenBase from '../../components/views/ScreenBase';
 import UIButton from '../../components/partials/UIButton';
 import { connect } from 'react-redux';
+import UIButtonsWrapper from '../../components/partials/UIButtonsWrapper';
 
 const { width, height } = Dimensions.get('window');
 
@@ -56,7 +63,8 @@ class AudioPlayerScreen extends Component {
   render() {
     const { navigation, screenProps } = this.props,
       { currentUserName, logout } = screenProps,
-      { navigate } = navigation;
+      { navigate } = navigation,
+      { isPlaying } = this.state;
 
     return (
       <ScreenBase navigate={navigate}>
@@ -64,18 +72,34 @@ class AudioPlayerScreen extends Component {
           <Text style={styles.text}>
             Welcome {currentUserName} to 🦄 paradise!
           </Text>
+          <UIButtonsWrapper>
+            {!isPlaying ? (
+              <TouchableOpacity
+                onPress={() => this._play()}
+                style={styles.audioControlButton}
+              >
+              <Text style={styles.audioControlButtonText}>▶️</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => this._pause()}
+                style={styles.audioControlButton}
+              >
+                <Text style={styles.audioControlButtonText}>⏸️</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => this._stop()}
+              style={styles.audioControlButton}
+            >
+            <Text style={styles.audioControlButtonText}>⏹</Text>
+            </TouchableOpacity>
+          </UIButtonsWrapper>
           <UIButton
-            onPress={() => this._play()}
-            title="Play"
-            style={styles.button}
-          />
-          <UIButton
-            onPress={() => this._pause()}
-            title="Pause"
-            style={styles.button}
-          />
-          <UIButton
-            onPress={logout}
+            onPress={() => {
+              this._stop();
+              logout();
+            }}
             title="Log out"
             style={[styles.button, styles.logout]}
           />
@@ -86,13 +110,19 @@ class AudioPlayerScreen extends Component {
 }
 
 const styles = {
+  audioControlButton: {
+    marginHorizontal: 20
+  },
+  audioControlButtonText: {
+    fontSize: height / 10
+  },
   button: {
     width: width / 2.5,
     marginVertical: height / 40,
   },
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
