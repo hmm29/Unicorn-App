@@ -1,22 +1,14 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import {
-  AsyncStorage,
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  AlertIOS} from 'react-native';
+  Dimensions
+} from 'react-native';
 
 import ScreenBase from '../ScreenBase';
 import UIButton from '../../partials/UIButton';
 import t from 'tcomb-form-native';
 import PropTypes from 'prop-types';
 
-const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 const Form = t.form.Form;
 
 const email = t.refinement(t.String, email => {

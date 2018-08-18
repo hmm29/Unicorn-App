@@ -1,16 +1,13 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
 export default class ScreenBase extends Component {
   static props = {
     navigate: PropTypes.func
-  }
+  };
   
   render() {
     const {navigate} = this.props;

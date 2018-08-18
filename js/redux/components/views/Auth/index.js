@@ -1,6 +1,3 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import {AsyncStorage, Dimensions, TouchableOpacity, Text} from 'react-native';
 import ScreenBase from '../ScreenBase';

@@ -1,18 +1,16 @@
-/**
- * Created by harrisonmiller on 10/3/17.
- */
 import React, { Component } from 'react';
-import { Alert, StatusBar, View } from 'react-native';
+import { Alert, NativeModules, Platform, StatusBar, View } from 'react-native';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { login, logout } from '../../actions/auth';
 import { token } from '../../../data/token.json';
 import Auth0 from 'react-native-auth0';
 
-import Auth from '../../components/views/Auth/index';
 import Login from '../../components/views/Login/index';
 import Register from '../../components/views/Register/index';
 import AudioPlayerScreen from '../AudioPlayerScreen/index';
+
+const MyNativeAlertManager = NativeModules.MyNativeAlertManager;
 
 const auth0 = new Auth0({
   domain: 'hmax.auth0.com',
@@ -108,7 +106,13 @@ class Application extends Component {
       let response = await fetch(logoutUrl);
       this.props.onLogout();
 
-      if (response) Alert.alert('Logout Success', `You've logged out.`);
+      if (response) {
+        if(Platform.OS === 'ios') {
+            MyNativeAlertManager.alert('Logout Success', `You've logged out.`); // use native iOS bridge here
+        } else {
+            Alert.alert('Logout Success', `You've logged out.`);
+        }
+      }
     } catch (e) {
       Alert.alert('Oops!', 'There was a problem with logout!\n\n' + e.message);
     }

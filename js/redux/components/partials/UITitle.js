@@ -1,6 +1,3 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import {Dimensions, Text} from 'react-native';
 import PropTypes from 'prop-types';

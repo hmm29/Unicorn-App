@@ -1,11 +1,8 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import {Dimensions, View} from 'react-native';
 import PropTypes from 'prop-types';
 
-const {width, height} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 export default class UIButtonsWrapper extends Component {
   static propTypes = {

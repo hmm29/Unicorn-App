@@ -1,15 +1,8 @@
-/**
- * Created by harrisonmiller on 9/29/17.
- */
 import React, {Component} from 'react';
 import {
-  AsyncStorage,
   Dimensions,
-  StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
-  AlertIOS} from 'react-native';
+  View} from 'react-native';
 
 import ScreenBase from '../ScreenBase';
 import t from 'tcomb-form-native';

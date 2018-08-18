@@ -1,6 +1,5 @@
 import React from 'react';
 import App from './App';
-import Auth from './js/redux/components/views/Auth';
 import Login from './js/redux/components/views/Login';
 import Register from './js/redux/components/views/Register';
 import t from 'tcomb-form-native';
@@ -10,11 +9,6 @@ import renderer from 'react-test-renderer';
 
 it('renders without crashing', () => {
     const rendered = renderer.create(<App />).toJSON();
-    expect(rendered).toBeTruthy();
-});
-
-it('renders the auth screen properly', () => {
-    const rendered = renderer.create(<Auth />).toJSON();
     expect(rendered).toBeTruthy();
 });
 

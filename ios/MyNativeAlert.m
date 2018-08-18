@@ -7,6 +7,8 @@
 //
 
 // MyNativeAlert.m
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "MyNativeAlert.h"
 
 @implementation MyNativeAlertManager
@@ -15,8 +17,15 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(alert:(NSString *)title message:(NSString *)message)
 {
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString title] message:[NSString message]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-  [alert show];
+  UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Logout Success"
+                                                                 message:@"You've logged out"
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+  
+  UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * action) {}];
+  
+  [alert addAction:defaultAction];
+  [self presentViewController:alert animated:NO completion:nil];
 }
 
 @end
