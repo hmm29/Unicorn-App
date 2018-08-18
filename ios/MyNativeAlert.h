@@ -7,6 +7,7 @@
 //
 
 // MyNativeAlert.h
+#import <UIKit/UIKit.h>
 #import <React/RCTBridgeModule.h>
 
 @interface MyNativeAlertManager : UIViewController <RCTBridgeModule>

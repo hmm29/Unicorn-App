@@ -1,87 +1,86 @@
-import React, {Component} from 'react';
-import {
-  Dimensions
-} from 'react-native';
+import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 
 import ScreenBase from '../ScreenBase';
 import UIButton from '../../partials/UIButton';
 import t from 'tcomb-form-native';
 import PropTypes from 'prop-types';
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const Form = t.form.Form;
 
 const email = t.refinement(t.String, email => {
-    const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/; //or any other regexp
-    return reg.test(email);
+  const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/; //or any other regexp
+  return reg.test(email);
 });
 
 const password = t.refinement(t.String, password => {
-    const reg = /[0-9a-zA-Z]{6,}/; //or any other regexp
-    return reg.test(password);
+  const reg = /[0-9a-zA-Z]{6,}/; //or any other regexp
+  return reg.test(password);
 });
 
 const name = t.refinement(t.String, name => {
-    const reg = /^[a-zA-Z]+$/; //or any other regexp
-    return reg.test(name);
+  const reg = /^[a-zA-Z]+$/; //or any other regexp
+  return reg.test(name);
 });
 
 const loginForm = t.struct({
   email,
-  password
+  password,
 });
 
 const options = {
   fields: {
     email: {
-      error: 'Insert a valid email'
+      error: 'Insert a valid email',
     },
     password: {
       password: true,
       secureTextEntry: true,
-      error: 'Please use a valid password'
+      error: 'Password must contain at least 6 letters or numbers',
     },
-  }
+  },
 };
 
 export default class Login extends Component {
   static navigationOptions = {
-    title: 'Log In'
+    title: 'Log In',
   };
 
   static PropTypes = {
-    screenProps: PropTypes.object
+    screenProps: PropTypes.object,
   };
-  
+
   _onPress() {
     let value = this.refs.form.getValue();
     if (value) {
       this.props.screenProps.login(value.email, value.password);
     }
   }
-  
+
   render() {
     return (
       <ScreenBase>
-        <Form
-          ref="form"
-          type={loginForm}
-          options={options}/>
-        <UIButton title="Log In" style={styles.button} onPress={this._onPress.bind(this)}/>
+        <Form ref="form" type={loginForm} options={options} />
+        <UIButton
+          title="Log In 🌈"
+          style={styles.button}
+          onPress={this._onPress.bind(this)}
+        />
       </ScreenBase>
-    )
+    );
   }
 }
 
 const styles = {
   buttonText: {
-    fontSize: height/40,
-    textAlign: 'center'
+    fontSize: height / 40,
+    textAlign: 'center',
   },
   button: {
     borderWidth: 1,
     borderColor: '#aaa',
     borderRadius: 5,
     margin: 10,
-  }
+  },
 };

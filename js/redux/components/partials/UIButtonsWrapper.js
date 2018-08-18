@@ -7,7 +7,8 @@ const {height} = Dimensions.get('window');
 export default class UIButtonsWrapper extends Component {
   static propTypes = {
     style: PropTypes.object
-  }
+  };
+
   render() {
     const {style} = this.props;
     

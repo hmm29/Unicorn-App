@@ -79,7 +79,7 @@ class Application extends Component {
   // user name will either be in userMetadata field or a custom namespace field show below
   _getUserName(userInfo) {
     return (
-      (userInfo.metadata && userInfo.metadata.name) ||
+      (userInfo.userMetadata && userInfo.userMetadata.name) ||
       (userInfo['https://unicornapp.boomsight.com/user_metadata'] &&
         userInfo['https://unicornapp.boomsight.com/user_metadata'].name)
     );

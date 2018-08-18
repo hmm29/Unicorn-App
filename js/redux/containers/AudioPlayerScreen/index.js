@@ -32,6 +32,15 @@ class AudioPlayerScreen extends Component {
 
     AudioPlayer.prepare(url, () => {
       self._play();
+
+      AudioPlayer.getDuration(duration => {
+        console.log(duration);
+      });
+      setInterval(() => {
+        AudioPlayer.getCurrentTime(currentTime => {
+          self.setState({ currentTime });
+        });
+      }, 1000);
     });
 
     // Loop on iOS, stop on Android
@@ -61,18 +70,16 @@ class AudioPlayerScreen extends Component {
         });
     }
 
-  _stop() {
+  _stop(resetAnimation) {
     AudioPlayer.pause();
     AudioPlayer.setTime(0);
-    Animated.timing(this.state.rightToLeftAnimationRightPositionValue).stop();
-    this.setState({
-        isPlaying: false,
-        rightToLeftAnimationRightPositionValue: new Animated.Value(0)
-    })
-  }
-
-  _close() {
-    AudioPlayer.stop();
+    if(resetAnimation) {
+        Animated.timing(this.state.rightToLeftAnimationRightPositionValue).stop();
+        this.setState({
+            isPlaying: false,
+            rightToLeftAnimationRightPositionValue: new Animated.Value(0)
+        })
+    }
   }
 
   render() {
@@ -104,7 +111,7 @@ class AudioPlayerScreen extends Component {
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              onPress={() => this._stop()}
+              onPress={() => this._stop(true)}
               style={styles.audioControlButton}
             >
               <Text style={styles.audioControlButtonText}>⏹</Text>
@@ -122,7 +129,8 @@ class AudioPlayerScreen extends Component {
           </View>
           <UIButton
             onPress={() => {
-              this._close();
+              this._stop(false);
+              AudioPlayer.stop();
               logout();
             }}
             title="Log out"

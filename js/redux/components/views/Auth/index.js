@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get('window');
 export default class Auth extends Component {
   static navigationOptions = {
     title: 'Unicorn App'
-  }
+  };
   
   render() {
     const {navigate} = this.props.navigation;
