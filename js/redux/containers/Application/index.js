@@ -95,6 +95,7 @@ class Application extends Component {
         realm: 'Username-Password-Authentication',
       });
       this._getUserInfo(data.accessToken);
+
     } catch (e) {
       Alert.alert('Oops!', 'There was a problem with login!\n\n' + e.message);
     }

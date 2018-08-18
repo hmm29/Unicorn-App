@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Animated,
   Dimensions,
   Platform,
   Text,
@@ -20,12 +21,13 @@ class AudioPlayerScreen extends Component {
     this.state = {
       currentTime: '',
       isPlaying: false,
+      rightToLeftAnimationRightPositionValue: new Animated.Value(0),
     };
   }
 
   componentDidMount() {
     const url =
-        'https://uc8520665825fad19594c13669b5.previews.dropboxusercontent.com/p/orig/AAL131hhfHykvw6vHSen_D9dv0l7aDBzNJcGyp7db095r1AlWOLTu_k5s3igKJzLfoFCK1bDfhOqtCZ5BgMjXzWmnWxFDUGYXLr_l9e-oogvzjuCzHjwwcJCzjHDYTeUA-HuYvHtjgITdMvPu5j66O-H/p.mp3?dl=0&duc_id=dropbox_duc_id',
+        'https://uc3f7cc769bb039aad265fb084a0.previews.dropboxusercontent.com/p/orig/AAJxDMtHfN01wbvctCryAcpSUdeE1ga6LnU7LnQ5M8XwOj8p1Ljh5gP8vVC9cYG1ZKrkIHEHceIye_XNZNoHmFvCWeER_dJeNYz7hpr8teTGhA8wkFqg2gtQh_2e-2CrNkJSkQW84pFS5n4ndt40xh5j/p.mp3?dl=0&duc_id=dropbox_duc_id',
       self = this;
 
     AudioPlayer.prepare(url, () => {
@@ -45,26 +47,46 @@ class AudioPlayerScreen extends Component {
     AudioPlayer.onEnd(Platform.OS === 'ios' ? this._play : this._stop);
   }
 
-  _pause() {
-    AudioPlayer.pause();
-    this.setState({ isPlaying: false });
+  _animate() {
+      Animated.timing(this.state.rightToLeftAnimationRightPositionValue, {
+          toValue: width,
+          duration: 10000,
+      }).start();
   }
 
-  _play() {
+    _play() {
     AudioPlayer.play();
     this.setState({ isPlaying: true });
+    this._animate();
   }
 
-  _stop() {
-    AudioPlayer.stop();
-    this.setState({ isPlaying: false });
+    _pause() {
+        AudioPlayer.pause();
+        this.setState({ isPlaying: false });
+        Animated.timing(this.state.rightToLeftAnimationRightPositionValue).stop((value) => {
+            this.setState({
+                rightToLeftAnimationRightPositionValue: value
+            })
+        });
+    }
+
+  _stop(resetAnimation) {
+    AudioPlayer.pause();
+    AudioPlayer.setTime(0);
+    if(resetAnimation) {
+        Animated.timing(this.state.rightToLeftAnimationRightPositionValue).stop();
+        this.setState({
+            isPlaying: false,
+            rightToLeftAnimationRightPositionValue: new Animated.Value(0)
+        })
+    }
   }
 
   render() {
     const { navigation, screenProps } = this.props,
       { currentUserName, logout } = screenProps,
       { navigate } = navigation,
-      { isPlaying } = this.state;
+      { isPlaying, rightToLeftAnimationRightPositionValue } = this.state;
 
     return (
       <ScreenBase navigate={navigate}>
@@ -78,7 +100,7 @@ class AudioPlayerScreen extends Component {
                 onPress={() => this._play()}
                 style={styles.audioControlButton}
               >
-              <Text style={styles.audioControlButtonText}>▶️</Text>
+                <Text style={styles.audioControlButtonText}>▶️</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
@@ -89,15 +111,25 @@ class AudioPlayerScreen extends Component {
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              onPress={() => this._stop()}
+              onPress={() => this._stop(true)}
               style={styles.audioControlButton}
             >
-            <Text style={styles.audioControlButtonText}>⏹</Text>
+              <Text style={styles.audioControlButtonText}>⏹</Text>
             </TouchableOpacity>
           </UIButtonsWrapper>
+          <View style={styles.animationContainer}>
+            <Animated.Text
+              style={{
+                ...styles.animatedText,
+                right: rightToLeftAnimationRightPositionValue, // Bind opacity to animated value
+              }}
+            >
+              🦄🦄🦄
+            </Animated.Text>
+          </View>
           <UIButton
             onPress={() => {
-              this._stop();
+              this._stop(false);
               logout();
             }}
             title="Log out"
@@ -110,11 +142,21 @@ class AudioPlayerScreen extends Component {
 }
 
 const styles = {
+  animationContainer: {
+    width,
+    justifyContent: 'flex-end',
+  },
+  animatedText: {
+    fontSize: height / 10,
+    position: 'absolute',
+    top: 40,
+    right: 0,
+  },
   audioControlButton: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   audioControlButtonText: {
-    fontSize: height / 10
+    fontSize: height / 10,
   },
   button: {
     width: width / 2.5,
@@ -128,7 +170,7 @@ const styles = {
   },
   logout: {
     alignSelf: 'center',
-    marginVertical: height / 8,
+    marginVertical: height / 4,
   },
   text: {
     fontSize: 20,
