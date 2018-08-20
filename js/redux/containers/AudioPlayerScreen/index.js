@@ -27,7 +27,7 @@ class AudioPlayerScreen extends Component {
 
   componentDidMount() {
     const url =
-        'https://uc3f7cc769bb039aad265fb084a0.previews.dropboxusercontent.com/p/orig/AAJxDMtHfN01wbvctCryAcpSUdeE1ga6LnU7LnQ5M8XwOj8p1Ljh5gP8vVC9cYG1ZKrkIHEHceIye_XNZNoHmFvCWeER_dJeNYz7hpr8teTGhA8wkFqg2gtQh_2e-2CrNkJSkQW84pFS5n4ndt40xh5j/p.mp3?dl=0&duc_id=dropbox_duc_id',
+        'https://res.cloudinary.com/dxdsyeoz9/video/upload/v1534751733/Pink_Fluffy_Unicorns_Dancing_on_Rainbows_-_Fluffle_Puff_1_online-audio-converter.com_klvbog.mp3',
       self = this;
 
     AudioPlayer.prepare(url, () => {
